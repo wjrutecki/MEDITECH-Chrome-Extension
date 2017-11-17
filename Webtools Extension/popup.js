@@ -31,4 +31,4 @@ chrome.tabs.query(queryInfo, function(tabs) {
 
 
 });
-window.close();
+setTimeout(function(){window.close();},50);
