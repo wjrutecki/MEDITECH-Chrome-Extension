@@ -14,12 +14,23 @@ chrome.tabs.query(queryInfo, function(tabs) {
     						function(response){
 								var highlightText = response.data;
 								highlightText = highlightText.trim()
+
 								// Parse what's higlighted if applicable
 								if(highlightText.length > 0) {
+									// CLIN JIRA
 									if(highlightText.search(/CLIN-(?=[0-9]{4,5})/)  > -1) {
 										chrome.tabs.create({url:jira.concat(highlightText),active: false});
-									} else if(highlightText.search(/[0-9]{8}/)  > -1) {
-										chrome.tabs.create({url:tab.url.replace(/[0-9]{8}.*/,highlightText),active: false});
+									// Task Number
+									} else if(highlightText.search(/#?[0-9]{8}/)  > -1) {
+										if(highlightText.startsWith("#")) {
+											highlightText = highlightText.substr(1,);
+										}
+										if(url.search(/(?:services)|(?:tools)\.meditech\.com/i) > -1) {
+											chrome.tabs.create({url:url.replace(/[0-9]{8}.*/,highlightText),active: false});
+										}
+										else {
+											chrome.tabs.create({url:webtools.concat(highlightText),active: false});
+										}
 									}
 
 								} else if (url.substring(0,68) == clientServices) {
