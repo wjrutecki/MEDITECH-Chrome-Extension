@@ -31,3 +31,4 @@ chrome.tabs.query(queryInfo, function(tabs) {
 
 
 });
+window.close();
